@@ -16,6 +16,11 @@ JMP = 0b01010100
 JEQ = 0b01010101
 JNE = 0b01010110
 
+AND = 0b10100000
+OR = 0b10101010
+XOR = 0b10101011
+
+
 # reg pointers
 IM = 5
 IS = 6
@@ -68,6 +73,9 @@ class CPU:
         self.branchtable[JMP] = self.JMP
         self.branchtable[JEQ] = self.JEQ
         self.branchtable[JNE] = self.JNE
+        self.branchtable[AND] = self.AND
+        self.branchtable[OR] = self.OR
+        self.branchtable[XOR] = self.XOR
 
     def load(self):
         """Load a program into memory."""
@@ -240,6 +248,50 @@ class CPU:
             self.JMP()
         else:
             self.pc += 2
+
+    ##Add the ALU operations: AND OR XOR NOT SHL SHR MOD
+    def AND(self):
+        pass
+        print("is AND")
+        #AND registerA registerB
+        registerA = self.ram_read(self.pc + 1)
+        print(f"{registerA}")
+
+        registerB = self.ram_read(self.pc + 2)
+        print(f"{registerB}")
+        #Bitwise-AND the values in registerA and registerB, then store the result in registerA.
+        registerA = registerA & registerB
+        print(f"{registerA}\n")
+
+        self.pc += 3
+
+    def OR(self):
+        pass
+        print("is OR")
+        registerA = self.ram_read(self.pc + 1)
+        print(f"{registerA}")
+
+        registerB = self.ram_read(self.pc + 2)
+        print(f"{registerB}")
+
+        registerA = registerA | registerB
+        print(f"{registerA}\n")
+
+        self.pc += 3
+
+    def XOR(self):
+        pass
+        print("is XOR")
+        registerA = self.ram_read(self.pc + 1)
+        print(f"{registerA}")
+
+        registerB = self.ram_read(self.pc + 2)
+        print(f"{registerB}")
+
+        registerA = registerA ^ registerB
+        print(f"{registerA}\n")
+
+        self.pc += 3
 
     def run(self):
         """Run the CPU."""
