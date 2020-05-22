@@ -13,6 +13,8 @@ CALL = 0b01010000
 RET = 0b00010001
 CMP = 0b10100111
 JMP = 0b01010100
+JEQ = 0b01010101
+JNE = 0b01010110
 
 # reg pointers
 IM = 5
@@ -64,6 +66,8 @@ class CPU:
         self.branchtable[RET] = self.RET
         self.branchtable[CMP] = self.CMP
         self.branchtable[JMP] = self.JMP
+        self.branchtable[JEQ] = self.JEQ
+        self.branchtable[JNE] = self.JNE
 
     def load(self):
         """Load a program into memory."""
@@ -214,6 +218,28 @@ class CPU:
         #Jump to the address stored in the given register.
         #Set the PC to the address stored in the given register.
         self.pc = self.reg[register]
+
+    def JEQ(self):
+        #pass
+        #print("is JEQ")
+        #JEQ register
+        # IS SET IN JMP | register = self.ram_read(self.pc + 1)
+        #If equal flag is set (true), jump to the address stored in the given register.
+        if self.flag[E]:# can use bull 0/1 set above
+            self.JMP()
+        else:
+            #print("passed JEQ")
+            self.pc += 2
+
+    def JNE(self):
+        #pass
+        #print("is JNE")
+        #JNE register
+        #If E flag is clear (false, 0), jump to the address stored in the given register.
+        if not self.flag[E]:# can use bull 0/1 set above
+            self.JMP()
+        else:
+            self.pc += 2
 
     def run(self):
         """Run the CPU."""
