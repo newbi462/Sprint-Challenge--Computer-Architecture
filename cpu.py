@@ -7,11 +7,20 @@ PRN = 0b01000111
 MUL = 0b10100010
 HLT = 0b00000001
 PUSH = 0b01000101
-SP = 7
+#SP = 7
 POP = 0b01000110
 CALL = 0b01010000
 RET = 0b00010001
 
+# reg pointers
+IM = 5
+IS = 6
+SP = 7
+
+#FLAG pointers
+L = -3
+G = -2
+E = -1
 
 
 class CPU:
@@ -34,6 +43,7 @@ class CPU:
         ##FROM STEP 2: You don't need to add the MAR or MDR to your CPU class #MAR: Memory Address Register, holds the memory address we're reading or writing
         ##FROM STEP 2: You don't need to add the MAR or MDR to your CPU class #MDR: Memory Data Register, holds the value to write or the value just read
         #FL: Flags, see below
+        self.flag = [0] * 8
 
         #Memory
         #self.memory = [0] * 256 #Memory | The LS-8 has 8-bit addressing, so can address 256 bytes of RAM total.
