@@ -11,6 +11,7 @@ PUSH = 0b01000101
 POP = 0b01000110
 CALL = 0b01010000
 RET = 0b00010001
+CMP = 0b10100111
 
 # reg pointers
 IM = 5
@@ -60,6 +61,7 @@ class CPU:
         self.branchtable[POP] = self.POP
         self.branchtable[CALL] = self.CALL
         self.branchtable[RET] = self.RET
+        self.branchtable[CMP] = self.CMP
 
     def load(self):
         """Load a program into memory."""
@@ -170,11 +172,37 @@ class CPU:
         self.pc += 2
 
     def CALL(self):
-        #pass
-        print("is call")
+        pass
 
     def RET(self):
         pass
+
+    def CMP(self):
+        #pass
+        #print("is CMP")
+        #CMP registerA registerB
+        registerA = self.ram_read(self.pc + 1)
+        registerB = self.ram_read(self.pc + 2)
+
+        valueA = self.reg[registerA]
+        valueB = self.reg[registerB]
+
+        #If registerA is less than registerB, set the Less-than L flag to 1, otherwise set it to 0.
+        if valueA < valueB:
+            self.flag[L] = 1
+            self.flag[G] = 0
+            self.flag[E] = 0
+        #If registerA is greater than registerB, set the Greater-than G flag to 1, otherwise set it to 0.
+        elif valueA > valueB:
+            self.flag[L] = 0
+            self.flag[G] = 1
+            self.flag[E] = 0
+        else: #If they are equal, set the Equal E flag to 1, otherwise set it to 0.
+            self.flag[L] = 0
+            self.flag[G] = 0
+            self.flag[E] = 1
+
+        self.pc += 3
 
     def run(self):
         """Run the CPU."""
