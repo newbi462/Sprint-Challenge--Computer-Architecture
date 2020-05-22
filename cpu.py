@@ -12,6 +12,7 @@ POP = 0b01000110
 CALL = 0b01010000
 RET = 0b00010001
 CMP = 0b10100111
+JMP = 0b01010100
 
 # reg pointers
 IM = 5
@@ -62,6 +63,7 @@ class CPU:
         self.branchtable[CALL] = self.CALL
         self.branchtable[RET] = self.RET
         self.branchtable[CMP] = self.CMP
+        self.branchtable[JMP] = self.JMP
 
     def load(self):
         """Load a program into memory."""
@@ -203,6 +205,15 @@ class CPU:
             self.flag[E] = 1
 
         self.pc += 3
+
+    def JMP(self):
+        #pass
+        #print("is JMP")
+        #JMP register
+        register = self.ram_read(self.pc + 1)
+        #Jump to the address stored in the given register.
+        #Set the PC to the address stored in the given register.
+        self.pc = self.reg[register]
 
     def run(self):
         """Run the CPU."""
